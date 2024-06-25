@@ -1,4 +1,6 @@
 
+
+<% if @events.any? %>
   <table class="table">
     <% @events.each_with_index do |event, index| %>
       <tr>
@@ -12,7 +14,12 @@
         <div class="p-8">
         <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= event.name  %></div>
         <p class="block mt-1 text-lg leading-tight font-medium text-black"><%= event.venue.name %></p>
-        <p class="mt-2 text-gray-500"><%= event.date_time.strftime("%a · %b %d · %I:%M %p") %></p>
+        <% if event.date_time %>
+          <p class="mt-2 text-gray-500"><%= event.date_time.strftime("%a · %b %d · %I:%M %p") %></p>
+        <% else %>
+          <p class="mt-2 text-gray-500">Date and time information not yet available.</p>
+        <% end %>
+
         <button class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white">
           <%= link_to 'More Info', event, style: 'text-decoration: none; color: white;' %>
         </button>
@@ -24,3 +31,8 @@
       </tr>
     <% end %>
   </table>
+
+<%= will_paginate @events %>
+<% else %>
+  <p>No events found.</p>
+<% end %>

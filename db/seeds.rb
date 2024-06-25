@@ -16,7 +16,7 @@ require 'net/http'
 require 'json'
 
 # Define the base URL for the Ticketmaster API
-base_url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh"
+base_url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh&size=200"
 
 # Make a request to the Ticketmaster API
 uri = URI(base_url)
@@ -51,9 +51,9 @@ data["_embedded"]["events"].each do |event_data|
     url: event_data["url"],
     image_url: event_data["images"][0]["url"],
     info: venue_data["generalInfo"] ? venue_data["generalInfo"]["generalRule"] : "Information not yet available.",
-    min_price: event_data["priceRanges"][0]["min"],
-    max_price: event_data["priceRanges"][0]["max"],
-    date_time: DateTime.parse(event_data["dates"]["start"]["dateTime"]),
+    min_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["min"] : "Price information not yet available.",
+    max_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["max"] : "Price information not yet available.",
+    date_time: event_data["dates"] && event_data["dates"]["start"] && event_data["dates"]["start"]["dateTime"] ? DateTime.parse(event_data["dates"]["start"]["dateTime"]) : "Date and time information not yet available.",
     venue: venue,
     classification: classification
   )
