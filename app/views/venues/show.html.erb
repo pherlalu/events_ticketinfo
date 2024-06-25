@@ -1,0 +1,62 @@
+<!-- app/views/venues/show.html.erb -->
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Venue Name:</strong>
+  <%= @venue.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @venue.address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @venue.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @venue.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @venue.country %>
+</p>
+
+<h2>Events at <%= @venue.name %></h2>
+
+<% if @venue.events.any? %>
+  <table class="table-auto w-full border-collapse border border-gray-200">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2">Event Name</th>
+        <th class="border border-gray-300 px-4 py-2">Date and Time</th>
+        <th class="border border-gray-300 px-4 py-2">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td class="border border-gray-300 px-4 py-2"><%= link_to event.name, event_path(event) %></td>
+          <td class="border border-gray-300 px-4 py-2"><%= event.date_time.strftime('%B %d, %Y - %H:%M %p') %></td>
+          <td class="border border-gray-300 px-4 py-2">
+            <% event.classifications.each do |classification| %>
+              <%= "#{classification.segment} - #{classification.genre}" %><br>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @events %>
+
+<% else %>
+  <p>No events found for this venue.</p>
+<% end %>
+
+<%= link_to 'Back', venues_path %>
