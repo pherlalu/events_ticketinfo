@@ -9,18 +9,48 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
+  
 
 <body>
-  <nav>
-    <%= link_to 'Home', root_path %>
-    <%= link_to 'About', about_path %>
-    <%= link_to 'Events', events_path %>
-    <%= link_to 'Artists', artists_path %>
-    <%= link_to 'Venues', venues_path %>
-    <%= link_to 'Classifications', classifications_path %>
-  </nav>
+    <nav class="w-screen bg-teal-500 h-fit overflow-hidden">
+        <div class="py-4 lg:px-8 px-4 max-w-[1280px] h-16 m-auto text-white flex items-center justify-between">
+            <div>
+              <h1 class="lg:text-2xl text-xl uppercase tracking-wider cursor-pointer font-bold text-white">Event Tickets</h1>
+            </div>
+            <div class="flex lg:gap-8 gap-6 uppercase tracking-wider cursor-pointer text-lg items-center" id="navItems">
+              <span class="group">
+                <%= link_to 'Home', root_path, style: 'text-decoration: none; color: white;' %>
+              </span>
+              <span class="group">
+                <%= link_to 'Artists', artists_path, style: 'text-decoration: none; color: white;' %>
+              </span>
+              <span class="group">
+                <%= link_to 'Locations', venues_path, style: 'text-decoration: none; color: white;' %>
+              </span>
+              <span class="group">
+                <%= link_to 'Categories', classifications_path, style: 'text-decoration: none; color: white;' %>
+              </span>
+              <span class="group">
+                <%= link_to 'About', about_path, style: 'text-decoration: none; color: white;' %>
+              </span>
 
+            </div>
+            <div id="hamburger" class="fa fa-bars flex items-center text-xl" style="display:none;"></div>
+            <div id="mobileNav"
+                class="fixed flex flex-col gap-8 pt-16 px-4 text-xl uppercase bg-teal-500 h-full inset-0 top-16 w-[70%] left-[-70%] ease-in-out duration-500 cursor-pointer">
+                <span>Home</span>
+                <span>Artist</span>
+                <span>Locations</span>
+                <span>Categories</span>
+                <span>About</span>
+            </div>
+        </div>
+    </nav>
   <main class="prose container mx-auto mt-28 ">
     <%= yield %>
   </main>
