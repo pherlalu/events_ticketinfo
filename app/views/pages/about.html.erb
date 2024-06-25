@@ -1,4 +1,151 @@
 <div>
-  <h1 class="font-bold text-4xl">Pages#about</h1>
-  <p>Find me in app/views/pages/about.html.erb</p>
+  <h1 class="font-bold text-4xl">ABOUT PAGE</h1>
+  <p>This project uses the Ticketmaster API (<a>https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/ </a>) to fetch various events, attractions, or venues, such as the event name, venue, genre, and artist of a concert. The data pulled from the API is structured and stored in a relational database for efficient querying and data retrieval. The database comprises tables that correspond to ActiveRecord models, namely Event, Venue, Genre, and Artist, each with their respective attributes.</p>
+  <p>The data from the Ticketmaster API is integrated into a single Ruby on Rails application. This integration allows users to explore, search, and visualize the event data, thereby enhancing their event discovery experience. The application design ensures that the data from different sources (events, venues, genres, ticket prices, artists) are related and interconnected, providing a comprehensive view of the event information.</p>
+
+  <div class="mx-auto  p-6  rounded-md">
+    <div class="mt-6 text-center">
+      <h2 class="text-xl font-bold mb-2">Entity-Relationship Diagram (ERD)</h2>
+      <img src="<%= asset_path('erd_intro_project.png') %>" alt="ERD Image" class="max-w-full h-auto mx-auto rounded-md shadow-md">
+    </div>
+    <div class="mt-6 text-center">
+      <h2 class="text-xl font-bold mb-2">Datasets</h2>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse border border-gray-200">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 px-4 py-2">Dataset</th>
+              <th class="border border-gray-300 px-4 py-2">Parameter</th>
+              <th class="border border-gray-300 px-4 py-2">Description</th>
+              <th class="border border-gray-300 px-4 py-2">Data Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="10" class="border border-gray-300 px-4 py-2">event</td>
+              <td class="border border-gray-300 px-4 py-2">event_id</td>
+              <td class="border border-gray-300 px-4 py-2">Unique identifier for the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">name</td>
+              <td class="border border-gray-300 px-4 py-2">Name of the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">url</td>
+              <td class="border border-gray-300 px-4 py-2">URL of the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">date_time</td>
+              <td class="border border-gray-300 px-4 py-2">Date and time of the event</td>
+              <td class="border border-gray-300 px-4 py-2">datetime</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">venue_id</td>
+              <td class="border border-gray-300 px-4 py-2">Foreign key referencing the venue of the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">classification_id</td>
+              <td class="border border-gray-300 px-4 py-2">Foreign key referencing the classification of the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">image_url</td>
+              <td class="border border-gray-300 px-4 py-2">URL of the event image</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">info</td>
+              <td class="border border-gray-300 px-4 py-2">Additional information about the event</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">min_price</td>
+              <td class="border border-gray-300 px-4 py-2">Minimum ticket price for the event</td>
+              <td class="border border-gray-300 px-4 py-2">float</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">max_price</td>
+              <td class="border border-gray-300 px-4 py-2">Maximum ticket price for the event</td>
+              <td class="border border-gray-300 px-4 py-2">float</td>
+            </tr>
+            
+            <tr>
+              <td rowspan="6" class="border border-gray-300 px-4 py-2">venue</td>
+              <td class="border border-gray-300 px-4 py-2">venue_id</td>
+              <td class="border border-gray-300 px-4 py-2">Unique identifier for the venue</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">name</td>
+              <td class="border border-gray-300 px-4 py-2">Name of the venue</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">address</td>
+              <td class="border border-gray-300 px-4 py-2">Address of the venue</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">city</td>
+              <td class="border border-gray-300 px-4 py-2">City where the venue is located</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">state</td>
+              <td class="border border-gray-300 px-4 py-2">State where the venue is located</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">country</td>
+              <td class="border border-gray-300 px-4 py-2">Country where the venue is located</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            
+            <tr>
+              <td rowspan="3" class="border border-gray-300 px-4 py-2">classification</td>
+              <td class="border border-gray-300 px-4 py-2">classification_id</td>
+              <td class="border border-gray-300 px-4 py-2">Unique identifier for the classification</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">segment</td>
+              <td class="border border-gray-300 px-4 py-2">Segment of the event classification</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">genre</td>
+              <td class="border border-gray-300 px-4 py-2">Genre of the event classification</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            
+            <tr>
+              <td rowspan="4" class="border border-gray-300 px-4 py-2">artist</td>
+              <td class="border border-gray-300 px-4 py-2">artist_id</td>
+              <td class="border border-gray-300 px-4 py-2">Unique identifier for the artist</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">name</td>
+              <td class="border border-gray-300 px-4 py-2">Name of the artist</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">url</td>
+              <td class="border border-gray-300 px-4 py-2">URL of the artist</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">image_url</td>
+              <td class="border border-gray-300 px-4 py-2">URL of the artist image</td>
+              <td class="border border-gray-300 px-4 py-2">string</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
