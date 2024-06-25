@@ -4,7 +4,20 @@
   <strong>Name:</strong>
   <%= @event.name %>
 </p>
-
+<p>
+  <strong>Venue:</strong>
+  <%= link_to @event.venue.name, venue_path(@event.venue) %>
+</p>
+<p>
+  <strong>Event Link:</strong>
+  <%= @event.url %>
+</p>
+<p>
+  <strong>Main Guests:</strong>
+  <% @event.artists.each do |artist| %>
+    <%= link_to artist.name, artist_path(artist) %><br>
+  <% end %>
+</p>
 <p>
   <strong>Info:</strong>
   <%= @event.info %>
@@ -20,15 +33,4 @@
   <%= @event.max_price %>
 </p>
 
-<p>
-  <strong>Venue:</strong>
-  <%= @event.venue.name %>
-</p>
-
-<p>
-  <strong>Classification:</strong>
-  <%= @event.classification.genre %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

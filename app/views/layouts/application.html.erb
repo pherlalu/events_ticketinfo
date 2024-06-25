@@ -11,10 +11,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+<body>
+  <nav>
+    <%= link_to 'Home', root_path %>
+    <%= link_to 'About', about_path %>
+    <%= link_to 'Events', events_path %>
+    <%= link_to 'Artists', artists_path %>
+    <%= link_to 'Venues', venues_path %>
+    <%= link_to 'Classifications', classifications_path %>
+  </nav>
 
-    <main class="prose container mx-auto mt-28 ">
-      <%= yield %>
-    </main>
-  </body>
+  <main class="prose container mx-auto mt-28 ">
+    <%= yield %>
+  </main>
+</body>
+
 </html>

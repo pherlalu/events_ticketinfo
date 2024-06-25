@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_020347) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_25_185435) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -60,20 +60,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_020347) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "classifications_events", id: false, force: :cascade do |t|
+    t.integer "classification_id", null: false
+    t.integer "event_id", null: false
+    t.index ["classification_id", "event_id"], name: "index_classifications_events_on_classification_id_and_event_id", unique: true
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "event_id"
     t.string "name"
     t.string "url"
     t.datetime "date_time"
     t.integer "venue_id", null: false
-    t.integer "classification_id", null: false
     t.string "image_url"
     t.string "info"
     t.float "min_price"
     t.float "max_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["classification_id"], name: "index_events_on_classification_id"
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
 
@@ -88,6 +92,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_020347) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "events", "classifications"
   add_foreign_key "events", "venues"
 end

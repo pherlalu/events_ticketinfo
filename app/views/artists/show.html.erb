@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @artist.name %>
+</p>
+
+<p>
+  <strong>Artist Link:</strong>
+  <%= @artist.url %>
+</p>
+
+<p>
+  <strong>Events:</strong>
+  <% @artist.events.each do |event| %>
+    <%= link_to event.name, event_path(event) %><br>
+  <% end %>
+</p>
+
+<%= link_to 'Back', artists_path %>

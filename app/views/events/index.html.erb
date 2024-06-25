@@ -1,38 +1,36 @@
-
-
 <% if @events.any? %>
   <table class="table">
     <% @events.each_with_index do |event, index| %>
       <tr>
         <td>
-    <div class=" mx-auto bg-white rounded-xl shadow-md overflow-hidden  m-3">
-
-    <div class="md:flex">
-        <div class="md:flex-shrink-0">
-        <img class=" object-cover md:w-48" src="<%= event.image_url %>" alt="Doctor's image">
-        </div>
-        <div class="p-8">
-        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= event.name  %></div>
-        <p class="block mt-1 text-lg leading-tight font-medium text-black"><%= event.venue.name %></p>
-        <% if event.date_time %>
-          <p class="mt-2 text-gray-500"><%= event.date_time.strftime("%a · %b %d · %I:%M %p") %></p>
-        <% else %>
-          <p class="mt-2 text-gray-500">Date and time information not yet available.</p>
-        <% end %>
-
-        <button class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white">
-          <%= link_to 'More Info', event, style: 'text-decoration: none; color: white;' %>
-        </button>
-
-        </div>
-    </div>
-    </div>
+          <div class="mx-auto bg-white rounded-xl shadow-md overflow-hidden m-3">
+            <div class="md:flex">
+              <div class="md:flex-shrink-0">
+                <img class="object-cover md:w-48" src="<%= event.image_url %>" alt="Event's image">
+              </div>
+              <div class="p-8">
+                <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"><%= event.name %></div>
+                <p class="block mt-1 text-lg leading-tight font-medium text-black"><%= event.venue.name %></p>
+                <p class="mt-2 text-gray-500">Artists: <%= event.artists.map(&:name).join(', ') %></p>
+                <p class="mt-2 text-gray-500">Classification: <%= event.classifications.map(&:segment).join(', ') %></p>
+                <% if event.date_time %>
+                  <p class="mt-2 text-gray-500"><%= event.date_time.strftime("%a · %b %d · %I:%M %p") %></p>
+                <% else %>
+                  <p class="mt-2 text-gray-500">Date and time information not yet available.</p>
+                <% end %>
+                <button class="mt-5 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white">
+                  <%= link_to 'More Info', event, style: 'text-decoration: none; color: white;' %>
+                </button>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     <% end %>
   </table>
-
-<%= will_paginate @events %>
+  <div class="flex items-center justify-center m-5 space-x-2">
+    <%= will_paginate @events, previous_label: 'Previous', next_label: 'Next', renderer: WillPaginate::ActionView::LinkRenderer, inner_window: 2, outer_window: 0, page_links: true %>
+  </div>
 <% else %>
   <p>No events found.</p>
 <% end %>
