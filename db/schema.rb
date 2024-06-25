@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_24_040849) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_25_020347) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -37,4 +37,57 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_040849) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "artists", force: :cascade do |t|
+    t.string "artist_id"
+    t.string "name"
+    t.string "url"
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "artists_events", id: false, force: :cascade do |t|
+    t.integer "artist_id", null: false
+    t.integer "event_id", null: false
+    t.index ["artist_id", "event_id"], name: "index_artists_events_on_artist_id_and_event_id", unique: true
+  end
+
+  create_table "classifications", force: :cascade do |t|
+    t.string "classification_id"
+    t.string "segment"
+    t.string "genre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "event_id"
+    t.string "name"
+    t.string "url"
+    t.datetime "date_time"
+    t.integer "venue_id", null: false
+    t.integer "classification_id", null: false
+    t.string "image_url"
+    t.string "info"
+    t.float "min_price"
+    t.float "max_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classification_id"], name: "index_events_on_classification_id"
+    t.index ["venue_id"], name: "index_events_on_venue_id"
+  end
+
+  create_table "venues", force: :cascade do |t|
+    t.string "venue_id"
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "events", "classifications"
+  add_foreign_key "events", "venues"
 end
