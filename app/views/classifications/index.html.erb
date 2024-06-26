@@ -1,4 +1,19 @@
-<div>
-  <h1 class="font-bold text-4xl">Classifications#index</h1>
-  <p>Find me in app/views/classifications/index.html.erb</p>
-</div>
+<h1 class="text-2xl font-bold mb-4">All Classifications</h1>
+
+<% if @classifications.any? %>
+  <div class="grid grid-cols-2 gap-4">
+    <% @classifications.each do |classification| %>
+      <div class="border border-gray-200 p-4 rounded-lg">
+        <h2 class="text-lg font-bold"><%= "#{classification.segment} - #{classification.genre}" %></h2>
+        <%= link_to 'Show Events', classification_path(classification), class: 'mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= will_paginate @classifications %>
+
+<% else %>
+  <p>No classifications found.</p>
+<% end %>
+
+<%# <%= link_to 'Back', root_path, class: 'mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>

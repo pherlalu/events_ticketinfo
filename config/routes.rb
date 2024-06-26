@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   root "events#index"
   resources :events
   resources :venues
-  resources :classifications
+  resources :classifications do
+    member do
+      get 'events'
+    end
+  end
   resources :artists
   get 'about', to: 'pages#about'
 

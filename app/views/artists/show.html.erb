@@ -26,7 +26,13 @@
       <% @events.each do |event| %>
         <tr>
           <td class="border border-gray-300 px-4 py-2"><%= link_to event.name, event_path(event) %></td>
-          <td class="border border-gray-300 px-4 py-2"><%= event.date_time.strftime('%B %d, %Y - %H:%M %p') %></td>
+           <td class="border border-gray-300 px-4 py-2">
+            <% if event.date_time %>
+              <%= event.date_time.strftime('%B %d, %Y - %H:%M %p') %>
+            <% else %>
+              Date and Time not specified
+            <% end %>
+          </td>
           <td class="border border-gray-300 px-4 py-2"><%= event.venue.name %></td>
           <td class="border border-gray-300 px-4 py-2">
             <% event.classifications.each do |classification| %>

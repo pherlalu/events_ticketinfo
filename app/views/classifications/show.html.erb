@@ -1,0 +1,21 @@
+<h1 class="text-2xl font-bold mb-4"><%= "#{@classification.segment} - #{@classification.genre}" %></h1>
+  
+<% if @events.any? %>
+<div class="border border-gray-200 p-4 rounded-lg">
+  <h2 class="text-lg font-bold">Events</h2>
+
+  <ul class="mt-2">
+    <% @events.each do |event| %>
+      <li><%= link_to event.name, event_path(event) %></li>
+    <% end %>
+  </ul>
+</div>
+<div class="mt-4">
+  <%= will_paginate @events %>
+</div>
+    
+<% else %>
+  <p>No events found for this classification.</p>
+<% end %>
+
+<%# <%= link_to 'Back', classifications_path, class: 'mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
