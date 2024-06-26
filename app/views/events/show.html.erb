@@ -1,36 +1,52 @@
-<p id="notice"><%= notice %></p>
+<div class="max-w-3xl mx-auto p-6 bg-gray-100 shadow-xl rounded-lg">
+  
+  <p id="notice" class="text-gray-600"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
-<p>
-  <strong>Venue:</strong>
-  <%= link_to @event.venue.name, venue_path(@event.venue) %>
-</p>
-<p>
-  <strong>Event Link:</strong>
-  <%= @event.url %>
-</p>
-<p>
-  <strong>Main Guests:</strong>
-  <% @event.artists.each do |artist| %>
-    <%= link_to artist.name, artist_path(artist) %><br>
-  <% end %>
-</p>
-<p>
-  <strong>Info:</strong>
-  <%= @event.info %>
-</p>
+  <div class="flex items-center mb-6">
+    <div class="mr-4">
+      <div class="h-40 w-40 rounded-full">
+        <img src="<%= @event.image_url %>" alt="<%= @event.name %>" class="h-full w-full object-cover">
+      </div>
+    </div>
 
-<p>
-  <strong>Min Price:</strong>
-  <%= @event.min_price %>
-</p>
+    <div>
+      <p class="text-lg font-semibold">
+        <%= @event.name %>
+      </p>
+      <% if @event.date_time.present? %>
+        <p class="text-sm text-gray-600">
+          <%= l(@event.date_time, format: '%A, %B %e, %Y') %>
+        </p>
+      <% else %>
+        <p class="text-sm text-gray-600">Date and time not specified</p>
+      <% end %>
+    </div>
+  </div>
 
-<p>
-  <strong>Max Price:</strong>
-  <%= @event.max_price %>
-</p>
+  <div class="mt-4 mb-4">
+    <p><strong>Venue:</strong> <%= link_to @event.venue.name, venue_path(@event.venue), class: "text-blue-500 hover:underline" %></p>
+    <p><strong>Event Link:</strong> <%= link_to @event.url, @event.url, target: "_blank", class: "text-blue-500 hover:underline" %></p>
+  </div>
 
-<%= link_to 'Back', events_path %>
+  <div class="mb-4">
+    <p><strong>Main Guests:</strong></p>
+    <ul class="list-disc ml-4">
+      <% @event.artists.each do |artist| %>
+        <li><%= link_to artist.name, artist_path(artist), class: "text-blue-500 hover:underline" %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mb-4">
+    <p class="text-lg font-semibold">Info:</p>
+    <p class="whitespace-pre-line"><%= @event.info %></p>
+  </div>
+
+  <div class="mb-4">
+    <p><strong>Price Range:</strong> <%= number_to_currency(@event.min_price) %> - <%= number_to_currency(@event.max_price) %></p>
+  </div>
+
+  <div>
+    <%= link_to 'Go Back', events_path, class: "text-sm text-blue-500 hover:underline" %>
+  </div>
+</div>
