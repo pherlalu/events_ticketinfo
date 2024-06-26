@@ -15,7 +15,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   
-  <body>
+  <body class="flex flex-col min-h-screen">
     <nav class="w-screen bg-teal-500 h-fit overflow-hidden">
       <div class="py-4 lg:px-8 px-4 h-16 m-auto  text-white flex justify-between">
       <div>
@@ -27,56 +27,51 @@
       <div class="flex lg:gap-8 gap-6 uppercase tracking-wider cursor-pointer text-lg items-center" id="navItems">
         <span class="group">
           <%= link_to 'Home', root_path, style: 'text-decoration: none; color: white;' %>
-              </span>
-              <span class="group">
-                <%= link_to 'Artists', artists_path, style: 'text-decoration: none; color: white;' %>
-              </span>
-              <span class="group">
-                <%= link_to 'Locations', venues_path, style: 'text-decoration: none; color: white;' %>
-              </span>
-              <span class="group">
-                <%= link_to 'Categories', classifications_path, style: 'text-decoration: none; color: white;' %>
-              </span>
-              <span class="group">
-                <%= link_to 'About', about_path, style: 'text-decoration: none; color: white;' %>
-              </span>
-<div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
-  <%= form_with(url: search_path, method: "get", local: false, class: "inline-block") do %>
-    <div class="inline-flex items-center max-w-full">
-      <%= text_field_tag :query, params[:query], placeholder: "Start your search", class: "block flex-grow flex-shrink overflow-hidden border border-gray-300 rounded-l-md px-4 py-2 text-sm leading-tight focus:outline-none focus:border-gray-400 text-gray-900", style: "padding-left: 0.5rem; width: 16rem;" %>
-      
-      <!-- Dropdown for classification -->
-      <%= select_tag :classification_id, options_for_select(Classification.all.map { |c| [c.genre, c.id] }, params[:classification_id]), include_blank: 'All Categories', class: "block ml-2 appearance-none border border-gray-300 rounded-r-md px-4 py-2 bg-white text-gray-700 text-sm leading-tight focus:outline-none focus:border-gray-400", style: "min-width: 10rem;" %>
-      
-      <button type="submit" class="flex items-center justify-center relative h-8 w-8 rounded-full border border-transparent bg-white hover:bg-gray-100 ml-2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false" style="display: block; fill: none; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
-          <g fill="none">
-            <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9"></path>
-          </g>
-        </svg>
-      </button>
-    </div>
-  <% end %>
-</div>
-
-
-
-
-
-            <div id="hamburger" class="fa fa-bars flex items-center text-xl" style="display:none;"></div>
-            <div id="mobileNav"
-                class="fixed flex flex-col gap-8 pt-16 px-4 text-xl uppercase bg-teal-500 h-full inset-0 top-16 w-[70%] left-[-70%] ease-in-out duration-500 cursor-pointer">
-                <span>Home</span>
-                <span>Artist</span>
-                <span>Locations</span>
-                <span>Categories</span>
-                <span>About</span>
-            </div>
-        </div>
+        </span>
+        <span class="group">
+          <%= link_to 'Artists', artists_path, style: 'text-decoration: none; color: white;' %>
+        </span>
+        <span class="group">
+          <%= link_to 'Locations', venues_path, style: 'text-decoration: none; color: white;' %>
+        </span>
+        <span class="group">
+          <%= link_to 'Categories', classifications_path, style: 'text-decoration: none; color: white;' %>
+        </span>
+        <span class="group">
+          <%= link_to 'About', about_path, style: 'text-decoration: none; color: white;' %>
+         </span>
+          <div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
+            <%= form_with(url: search_path, method: "get", local: false, class: "inline-block") do %>
+              <div class="inline-flex items-center max-w-full">
+                <%= text_field_tag :query, params[:query], placeholder: "Start your search", class: "block flex-grow flex-shrink overflow-hidden border border-gray-300 rounded-l-md px-4 py-2 text-sm leading-tight focus:outline-none focus:border-gray-400 text-gray-900", style: "padding-left: 0.5rem; width: 16rem;" %>
+                
+                <!-- Dropdown for classification -->
+                <%= select_tag :classification_id, options_for_select(Classification.all.map { |c| [c.genre, c.id] }, params[:classification_id]), include_blank: 'All Categories', class: "block ml-2 appearance-none border border-gray-300 rounded-r-md px-4 py-2 bg-white text-gray-700 text-sm leading-tight focus:outline-none focus:border-gray-400", style: "min-width: 10rem;" %>
+                
+                <button type="submit" class="flex items-center justify-center relative h-8 w-8 rounded-full border border-transparent bg-white hover:bg-gray-100 ml-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" focusable="false" style="display: block; fill: none; height: 12px; width: 12px; stroke: currentcolor; stroke-width: 5.33333; overflow: visible;">
+                    <g fill="none">
+                      <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9"></path>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+            <% end %>
+          </div>
+      </div>
     </nav>
-  <main class="prose container mx-auto mt-28 ">
+  <main class="prose container mx-auto mt-28 flex-grow">
     <%= yield %>
   </main>
+  <footer class="footer footer-center  w-full p-4 bg-gray-300 text-gray-800">
+    <div class="text-center">
+      <p>
+        Copyright © 2024 -
+        <a class="font-semibold">Event Tickets</a
+        >
+      </p>
+    </div>
+  </footer>
 </body>
 
 </html>

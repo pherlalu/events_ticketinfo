@@ -13,7 +13,7 @@
                   <p class="block mt-1 text-lg leading-tight font-medium text-black"><%= event.venue.name %></p>
                   <p class="mt-2 text-gray-500">Classification: <%= event.classifications.map(&:segment).join(', ') %></p>
                     <% if event.date_time %>
-                      <p class=" text-gray-500"><%= event.date_time.strftime("%a · %b %d · %I:%M %p") %></p>
+                      <p class=" text-gray-500"><%= event.date_time.strftime("%a · %B %e %Y · %I:%M %p") %></p>
                     <% else %>
                       <p class= text-gray-500">Date and time information not yet available.</p>
                     <% end %>
