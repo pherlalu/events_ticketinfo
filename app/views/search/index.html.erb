@@ -1,0 +1,23 @@
+<div class="container mx-auto mt-8">
+<h1 class="text-2xl font-bold mb-4">
+  <% if params[:classification_id].present? %>
+    Search Results for '<%= @query %>' in the '<%= Classification.find(params[:classification_id]).genre %>' category
+  <% else %>
+    Search Results for '<%= @query %>'
+  <% end %>
+</h1>
+
+
+  <% if @events.any? %>
+    <p>Your search found <%= @events.total_entries %> events.</p>
+    <ul class="mt-4">
+      <% @events.each do |event| %>
+        <li>
+          <%= link_to event.name, event_path(event) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No events found.</p>
+  <% end %>
+</div>

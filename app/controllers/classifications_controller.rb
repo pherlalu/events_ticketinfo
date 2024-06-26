@@ -3,6 +3,7 @@ class ClassificationsController < ApplicationController
 
   def index
     @classifications = Classification.all.paginate(page: params[:page], per_page: 10)
+    @classifications = @classifications.where(category_id: params[:category_id]) if params[:category_id].present?
   end
 
   def show
