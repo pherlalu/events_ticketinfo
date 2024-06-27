@@ -1,11 +1,12 @@
-<div class="container mx-auto max-w-screen-md">
-  <h1 class="font-bold text-4xl">EVENTS</h1>
+<div class="container mx-auto max-w-full-md">
+  <h1 class="font-bold text-4xl">EVENTS TO WATCH OUT FOR</h1>
+  <h6 class="text-sm text-gray-500">Find tickets for concerts, sports, theater, family and more.</h6>
   <% if @events.any? %>
     <table class="table">
       <% @events.each_with_index do |event, index| %>
         <tr>
           <td>
-            <div class="bg-white rounded-xl shadow-md overflow-hidden m-3">
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden m-3 text-gray-800">
               <div class="md:flex">
                  <img class="h-48 w-full object-cover md:w-48" src="<%= event.image_url %>" alt="Event image">
                 <div class="p-8 space-y-4">
@@ -27,9 +28,9 @@
         </tr>
       <% end %>
     </table>
-    <div class="flex items-center justify-center m-5 space-x-2">
-      <%= will_paginate @events, previous_label: 'Previous', next_label: 'Next', renderer: WillPaginate::ActionView::LinkRenderer, inner_window: 2, outer_window: 0, page_links: true %>
-    </div>
+   <div class="flex items-center justify-center m-5 space-x-2">
+  <%= paginate @events %>
+</div>
   <% else %>
     <p>No events found.</p>
   <% end %>

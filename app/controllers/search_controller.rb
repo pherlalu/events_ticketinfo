@@ -13,6 +13,7 @@ class SearchController < ApplicationController
       @events = @events.where(classifications: { id: @classification_id })
     end
 
-    @events = @events.order(:name).paginate(page: params[:page], per_page: 10)
+    @events = @events.order(:name).page(params[:page]).per(10)
+    
   end
 end

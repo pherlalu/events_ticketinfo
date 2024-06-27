@@ -44,10 +44,10 @@
     </tbody>
   </table>
 
-  <%= will_paginate @events %>
+  <%= paginate @events %>
 
 <% else %>
   <p>No events found for this artist.</p>
 <% end %>
 
-<%= link_to 'Back', artists_path %>
+<%= link_to 'Go Back', artists_path %>
