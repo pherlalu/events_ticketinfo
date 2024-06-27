@@ -6,7 +6,7 @@ class Venue < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["address", "city", "country", "created_at", "id", "id_value", "name", "state", "updated_at", "venue_id"]
+    ["longitude", "latitude", "address", "city", "country", "created_at", "id", "id_value", "name", "state", "updated_at", "venue_id"]
   end
 
   validates :venue_id, :name, :address, :city, :country, presence: true

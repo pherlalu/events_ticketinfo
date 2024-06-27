@@ -7,4 +7,9 @@ class VenuesController < ApplicationController
     @venue = Venue.find(params[:id])
     @events = @venue.events.order(:date_time).page(params[:page]).per(10)
   end
+
+  def map
+    @venue = Venue.find(params[:id])
+  end
+  
 end

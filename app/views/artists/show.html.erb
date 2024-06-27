@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<div>
+<img class="h-48 w-full object-cover md:w-48" src="<%= @artist.image_url %>" alt="Artist image">
 <p>
   <strong>Name:</strong>
   <%= @artist.name %>
@@ -43,11 +45,10 @@
       <% end %>
     </tbody>
   </table>
-
-  <%= paginate @events %>
-
+  <div class="flex items-center justify-center m-5 space-x-2">
+    <%= paginate @events %>
+  </div>
 <% else %>
   <p>No events found for this artist.</p>
 <% end %>
 
-<%= link_to 'Go Back', artists_path %>

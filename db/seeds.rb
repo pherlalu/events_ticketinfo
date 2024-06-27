@@ -14,6 +14,7 @@ end if Rails.env.development?
 
 require 'net/http'
 require 'json'
+require 'faker'
 
 # Define the base URL for the Ticketmaster API
 base_url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh&size=200"
@@ -46,6 +47,11 @@ data_venues["_embedded"]["venues"].each do |venue_data|
     state: venue_data["state"]["name"],
     country: venue_data["country"]["name"]
   )
+  if venue.valid?
+    puts "Successfully created venue: #{venue.name}"
+  else
+    puts "Failed to create venue: #{venue.errors.full_messages.join(", ")}"
+  end
 end
 
 # Iterate over the artists in the response
@@ -61,37 +67,53 @@ end
 
 # Iterate over the events in the response
 data["_embedded"]["events"].each do |event_data|
-  # Find the venue for the event
-  venue_data = event_data["_embedded"]["venues"][0]
-  venue = Venue.find_by(venue_id: venue_data["id"])
 
-  # Create the classification for the event
-  classification_data = event_data["classifications"][0]
-  classification = Classification.find_or_create_by!(
-    classification_id: classification_data["segment"]["id"],
-    segment: classification_data["segment"]["name"],
-    genre: classification_data["genre"]["name"]
-  )
-
-  # Create a new event
-  event = Event.find_or_create_by!(
-    event_id: event_data["id"],
-    name: event_data["name"],
-    url: event_data["url"],
-    image_url: event_data["images"][0]["url"],
-    info: venue_data["generalInfo"] ? venue_data["generalInfo"]["generalRule"] : "Information not yet available.",
-    min_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["min"] : "Price information not yet available.",
-    max_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["max"] : "Price information not yet available.",
-    date_time: event_data["dates"] && event_data["dates"]["start"] && event_data["dates"]["start"]["dateTime"] ? DateTime.parse(event_data["dates"]["start"]["dateTime"]) : "Date and time information not yet available.",
-    venue: venue,
-
-  )
-  event.classifications << classification unless event.classifications.include?(classification)
-
-  # Find the artists for the event
-  artist_data = event_data["_embedded"]["attractions"]
-  artist_data.each do |artist|
-    artist = Artist.find_by(artist_id: artist["id"])
-    event.artists << artist unless event.artists.include?(artist)
+   # Find the venue for the event
+   venue_data = event_data["_embedded"]["venues"][0]
+   venue = Venue.find_by(venue_id: venue_data["id"])
+   if venue.nil?
+    puts "Venue does not exist for venue_id: #{venue_data['id']}. Creating default venue."
+    venue = Venue.create!(
+      venue_id: Faker::Alphanumeric.alpha(number: 4) + Faker::Number.number(digits: 6).to_s,
+      name: "SoFi Stadium",
+      address: Faker::Address.street_address,
+      city: Faker::Address.city,
+      state: Faker::Address.state,
+      country: Faker::Address.country
+    )
   end
+ 
+    # Use a transaction to ensure the venue is saved before the event
+    ActiveRecord::Base.transaction do
+
+    # Create the classification for the event
+    classification_data = event_data["classifications"][0]
+    classification = Classification.find_or_create_by!(
+      classification_id: classification_data["segment"]["id"],
+      segment: classification_data["segment"]["name"],
+      genre: classification_data["genre"]["name"]
+    )
+
+    # Create a new event
+    event = Event.find_or_create_by!(
+      event_id: event_data["id"],
+      name: event_data["name"],
+      url: event_data["url"],
+      image_url: event_data["images"][0]["url"],
+      info: venue_data["generalInfo"] ? venue_data["generalInfo"]["generalRule"] : "Information not yet available.",
+      min_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["min"] : "Price information not yet available.",
+      max_price: event_data["priceRanges"] && !event_data["priceRanges"].empty? ? event_data["priceRanges"][0]["max"] : "Price information not yet available.",
+      date_time: event_data["dates"] && event_data["dates"]["start"] && event_data["dates"]["start"]["dateTime"] ? DateTime.parse(event_data["dates"]["start"]["dateTime"]) : "Date and time information not yet available.",
+      venue: venue,
+
+    )
+    event.classifications << classification unless event.classifications.include?(classification)
+
+    # Find the artists for the event
+    artist_data = event_data["_embedded"]["attractions"]
+    artist_data.each do |artist|
+      artist = Artist.find_by(artist_id: artist["id"])
+      event.artists << artist unless event.artists.include?(artist)
+    end
+   end
 end

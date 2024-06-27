@@ -1,5 +1,23 @@
 <p id="notice"><%= notice %></p>
 
+<div id='map' style='width: auto; height: 300px;'></div>
+  <!-- Mapbox GL JS JavaScript -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+
+  <!-- Your Mapbox GL JS code -->
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZ2RpYXoyIiwiYSI6ImNseHdwZjM1ZTIzMWoybG9vM3owNXZwMHoifQ.Hw4AzEV4Yk1qXN1wONKDPQ';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [<%= @venue.longitude %>, <%= @venue.latitude %>],
+      zoom: 9
+    });
+
+    new mapboxgl.Marker()
+      .setLngLat([<%= @venue.longitude %>, <%= @venue.latitude %>])
+      .addTo(map);
+  </script>
 <p>
   <strong>Venue Name:</strong>
   <%= @venue.name %>
