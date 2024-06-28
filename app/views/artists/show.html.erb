@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<% if @artist.image.attached? %>
+  <img class="h-48 w-full object-cover md:w-48" src="<%= url_for(@artist.image) %>" alt="Artist image">
+<% end %>
 <div>
 <img class="h-48 w-full object-cover md:w-48" src="<%= @artist.image_url %>" alt="Artist image">
 <p>

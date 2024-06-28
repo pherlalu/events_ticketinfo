@@ -6,9 +6,11 @@ class Artist < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["artist_id", "created_at", "id", "id_value", "image_url", "name", "updated_at", "url"]
+    super + ['image_blob_id']
   end
 
+  has_one_attached :image
+  
   validates :artist_id, :name, :url, presence: true
   validates :artist_id, uniqueness: true
 end
