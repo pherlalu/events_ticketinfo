@@ -47,10 +47,25 @@ data_venues["_embedded"]["venues"].each do |venue_data|
     state: venue_data["state"]["name"],
     country: venue_data["country"]["name"]
   )
-  if venue.valid?
-    puts "Successfully created venue: #{venue.name}"
+
+  # Use Mapbox API to get coordinates for the venue
+  mapbox_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{CGI.escape(venue.address)}.json?access_token=pk.eyJ1IjoiZ2RpYXoyIiwiYSI6ImNseHdwZjM1ZTIzMWoybG9vM3owNXZwMHoifQ.Hw4AzEV4Yk1qXN1wONKDPQ"
+  uri_mapbox = URI(mapbox_url)
+  response_mapbox = Net::HTTP.get(uri_mapbox)
+  data_mapbox = JSON.parse(response_mapbox)
+
+  # Store the coordinates in the venue
+  if data_mapbox['features'] && data_mapbox['features'].first
+    coordinates = data_mapbox['features'].first['geometry']['coordinates']
   else
-    puts "Failed to create venue: #{venue.errors.full_messages.join(", ")}"
+    # Default coordinates (Ticketmaster hub address)
+    coordinates = [34.1802, -118.3092] # Replace with the actual coordinates
+  end
+
+  if venue.update(longitude: coordinates[0], latitude: coordinates[1])
+    puts "Updated venue coordinates successfully."
+  else
+    puts "Failed to update venue coordinates: #{venue.errors.full_messages.join(", ")}"
   end
 end
 

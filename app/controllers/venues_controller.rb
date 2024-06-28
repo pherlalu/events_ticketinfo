@@ -1,6 +1,6 @@
 class VenuesController < ApplicationController
   def index
-    @venues = Venue.includes(:events).order('events.date_time DESC').page(params[:page]).per(10)
+    @venues = Venue.where(id: Venue.select('MAX(id) as id').group(:name)).includes(:events).order('events.date_time DESC').page(params[:page]).per(10)
   end
   
   def show
