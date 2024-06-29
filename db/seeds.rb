@@ -16,22 +16,22 @@ require 'net/http'
 require 'json'
 require 'faker'
 
-# Define the base URL for the Ticketmaster API
+#  URL for the Ticketmaster API
 base_url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh&size=200"
 base_url_venues = "https://app.ticketmaster.com/discovery/v2/venues.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh&size=200"
 base_url_artists = "https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=kGZPifjKxWY1WP72vGaTeiWddM2Gdawh&size=200"
 
-# Make a request to the Ticketmaster API
+
 uri = URI(base_url)
 response = Net::HTTP.get(uri)
 data = JSON.parse(response)
 
-# Make a request to the Ticketmaster API for venues
+# Request to the Ticketmaster API for venues
 uri_venues = URI(base_url_venues)
 response_venues = Net::HTTP.get(uri_venues)
 data_venues = JSON.parse(response_venues)
 
-# Make a request to the Ticketmaster API for artists
+# Request to the Ticketmaster API for artists
 uri_artists = URI(base_url_artists)
 response_artists = Net::HTTP.get(uri_artists)
 data_artists = JSON.parse(response_artists)
@@ -48,7 +48,7 @@ data_venues["_embedded"]["venues"].each do |venue_data|
     country: venue_data["country"]["name"]
   )
 
-  # Use Mapbox API to get coordinates for the venue
+  # Mapbox API to get coordinates for the venue
   mapbox_url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{CGI.escape(venue.address)}.json?access_token=pk.eyJ1IjoiZ2RpYXoyIiwiYSI6ImNseHdwZjM1ZTIzMWoybG9vM3owNXZwMHoifQ.Hw4AzEV4Yk1qXN1wONKDPQ"
   uri_mapbox = URI(mapbox_url)
   response_mapbox = Net::HTTP.get(uri_mapbox)
@@ -59,7 +59,7 @@ data_venues["_embedded"]["venues"].each do |venue_data|
     coordinates = data_mapbox['features'].first['geometry']['coordinates']
   else
     # Default coordinates (Ticketmaster hub address)
-    coordinates = [34.1802, -118.3092] # Replace with the actual coordinates
+    coordinates = [34.1802, -118.3092]
   end
 
   if venue.update(longitude: coordinates[0], latitude: coordinates[1])

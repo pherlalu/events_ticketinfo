@@ -1,12 +1,12 @@
 <div>
   <h1 class="font-bold text-4xl">ABOUT PAGE</h1>
-  <p>This project uses the Ticketmaster API (<a>https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/ </a>) to fetch various events, attractions, or venues, such as the event name, venue, genre, and artist of a concert. The data pulled from the API is structured and stored in a relational database for efficient querying and data retrieval. The database comprises tables that correspond to ActiveRecord models, namely Event, Venue, Genre, and Artist, each with their respective attributes.</p>
+  <p>This project uses the Ticketmaster API (<a>https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/ </a>) to fetch various events, attractions, or venues, such as the event name, venue, genre, and artist of a concert. The data pulled from the API is structured and stored in a relational database for efficient querying and data retrieval. The database comprises tables that correspond to ActiveRecord models, namely Event, Venue, Classification, and Artist, each with their respective attributes.</p>
   <p>The data from the Ticketmaster API is integrated into a single Ruby on Rails application. This integration allows users to explore, search, and visualize the event data, thereby enhancing their event discovery experience. The application design ensures that the data from different sources (events, venues, genres, ticket prices, artists) are related and interconnected, providing a comprehensive view of the event information.</p>
 
   <div class="mx-auto  p-6  rounded-md">
     <div class="mt-6 text-center">
       <h2 class="text-xl font-bold mb-2">Entity-Relationship Diagram (ERD)</h2>
-      <img src="<%= asset_path('erd_intro_project.png') %>" alt="ERD Image" class="max-w-full h-auto mx-auto rounded-md shadow-md">
+      <img src="<%= asset_path('erd_intro_project.jpg') %>" alt="ERD Image" class="max-w-full h-auto mx-auto rounded-md shadow-md">
     </div>
     <div class="mt-6 text-center">
       <h2 class="text-xl font-bold mb-2">Datasets</h2>

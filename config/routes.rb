@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  # Maps to the index action in SearchController
   get 'search/index'
+  # Maps to the about action in PagesController
   get 'pages/about'
+
+  #Sets up authentication routes for admin_users 
   devise_for :admin_users, ActiveAdmin::Devise.config
+
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "events#index"
@@ -15,8 +20,6 @@ Rails.application.routes.draw do
   resources :artists
   get 'about', to: 'pages#about'
   get '/search', to: 'search#index', as: 'search'
-  get '/venues/:id/map', to: 'venues#map', as: 'venue_map'
-
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

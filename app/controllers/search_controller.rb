@@ -3,10 +3,10 @@ class SearchController < ApplicationController
     @query = params[:query]
     @classification_id = params[:classification_id]
 
-    @events = Event.includes(:classifications)
+    @events = Event.joins(:artists).includes(:classifications)
 
     if @query.present?
-      @events = @events.where("events.name LIKE ?", "%#{@query}%")
+      @events = @events.where("events.name LIKE ? OR artists.name LIKE ?", "%#{@query}%", "%#{@query}%")
     end
 
     if @classification_id.present?
@@ -14,6 +14,5 @@ class SearchController < ApplicationController
     end
 
     @events = @events.order(:name).page(params[:page]).per(10)
-    
   end
 end
